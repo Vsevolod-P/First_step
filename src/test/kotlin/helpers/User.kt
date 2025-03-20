@@ -1,5 +1,9 @@
 package helpers
 
-class User(var email: String, var password: String, var name: String) {
-}
+import java.time.Instant
 
+data class User(val email : String = "testKurica${Instant.now().toEpochMilli()}@pivo.ru",
+                val password : String = "Parol4ek123",
+                val name : String = "SaskeOtstoy",
+                var accessToken : String = null.toString()
+)

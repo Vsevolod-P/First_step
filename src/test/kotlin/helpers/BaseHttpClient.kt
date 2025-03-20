@@ -4,9 +4,8 @@ import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.coroutines.awaitStringResponseResult
 import com.github.kittinunf.result.Result
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import kotlinx.coroutines.runBlocking
-
-
 
 abstract class BaseHttpClient {
 
@@ -16,7 +15,7 @@ abstract class BaseHttpClient {
     private val gson = Gson()
 
 
-    fun doPostRequest(path: String, body: Any): String {
+    fun doPostRequest(path: String, body : User) : User {
         return runBlocking {
             val (request, response, result) = fuelManager.post(path)
                 .header("Content-Type", "application/json")
@@ -28,15 +27,17 @@ abstract class BaseHttpClient {
                     throw Exception("Error: ${result.getException().message}")
                 }
                 is Result.Success -> {
-                    result.get()
+                    val authResponse = gson.fromJson(result.get(), JsonObject::class.java).get("accessToken").asString
+                    body.accessToken = authResponse
+                    return@runBlocking body
                 }
             }
         }
     }
-    suspend fun doDeleteRequest(path: String, token: String): String {
+    suspend fun doDeleteRequest(path: String, accessToken: String): String {
         val (request, response, result) = fuelManager.delete(path)
             .header("Content-Type", "application/json")
-            .header("Authorization", token)
+            .header("Authorization", accessToken)
             .awaitStringResponseResult()
 
         return when (result) {

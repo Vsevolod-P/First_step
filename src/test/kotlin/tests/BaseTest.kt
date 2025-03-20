@@ -9,7 +9,7 @@ abstract class BaseTest {
     protected lateinit var driver: ChromeDriver
     protected lateinit var loginPage: LoginPage
     protected lateinit var mainPage: MainPage
-    protected lateinit var userCreationAPI: UserCreationApi
+    //protected lateinit var userCreationAPI: UserCreationApi
     protected lateinit var userApi: UserApi
     protected lateinit var user: User
 
@@ -19,15 +19,14 @@ abstract class BaseTest {
         driver.get(Const_URL.BASE_URL_LOGIN)
         loginPage = LoginPage(driver)
         mainPage = MainPage(driver)
-        userCreationAPI = UserCreationApi()
-        user = userCreationAPI.createUserData()
         userApi = UserApi()
+        user = User()
     }
 
     @AfterEach
     fun tearDown() {
         if (::userApi.isInitialized) {
-            userApi.deleteUser(user.email, user.password)
+            userApi.deleteUser(user)
         }
         if (::driver.isInitialized) {
             driver.quit()
