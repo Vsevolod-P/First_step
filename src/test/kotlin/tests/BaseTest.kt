@@ -9,7 +9,6 @@ abstract class BaseTest {
     protected lateinit var driver: ChromeDriver
     protected lateinit var loginPage: LoginPage
     protected lateinit var mainPage: MainPage
-    //protected lateinit var userCreationAPI: UserCreationApi
     protected lateinit var userApi: UserApi
     protected lateinit var user: User
 

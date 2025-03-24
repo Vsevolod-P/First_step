@@ -15,7 +15,7 @@ class TestLogin : BaseTest() {
     @Step("Вводим данные пользователя")
     fun testLogin() {
         UserApi().createUserRequest(user)
-        loginPage.loginData(user.email, user.password)
+        loginPage.loginData(user)
         loginPage.loginClick()
         mainPage.waitForMainPage()
         assertEquals(

@@ -1,21 +1,23 @@
 //package tests
 //
-//import helperApi.BaseTest
-//import helperClasses.MainPage
+//
+//import BaseTest
+//import helpers.Const_URL
+//import helpers.UserApi
 //import io.qameta.allure.Description
 //import io.qameta.allure.Step
-//import org.junit.Assert
-//import org.junit.Test
+//import org.junit.jupiter.api.Assertions.assertEquals
+//import org.junit.jupiter.api.Test
+//
 //
 //class TestMainPage : BaseTest() {
-//    private var mainPage: MainPage? = null
+//
 //    private val focusedMenuTab = "tab_tab_type_current__2BEPc"
 //
 //    @Test
 //    @Description("Проверка отображения ингредиентов")
 //    @Step("Проверяем отображение булок и клик по булкам")
 //    fun testBun() {
-//        mainPage = MainPage(driver)
 //        mainPage.goToIngridient()
 //        mainPage.goToBun()
 //        val text: String = mainPage.returnTextWaitForMainPageSelectBuns()
