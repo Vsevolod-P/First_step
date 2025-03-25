@@ -20,7 +20,6 @@ class TestLogin : BaseTest() {
         driver.get(Const_URL.BASE_URL_LOGIN)
     }
 
-
     @Test
     @Description("Проверка авторизации")
     @Step("Вводим данные пользователя")

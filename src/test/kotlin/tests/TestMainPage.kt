@@ -13,7 +13,7 @@ class TestMainPage : BaseTest() {
     @Test
     @Description("Проверка отображения ингредиентов")
     @Step("Проверяем отображение булок и клик по булкам")
-    fun testBun() {
+    fun testSelectBunTab() {
         MainPage(driver).let {
             it.goToIngridient()
             it.goToBun()
@@ -24,7 +24,7 @@ class TestMainPage : BaseTest() {
     @Test
     @Description("Проверка отображения соусов")
     @Step("Переключаем на вкладку соусов и проверяем отображение")
-    fun testSouces() {
+    fun testSelectSoucesTab() {
         MainPage(driver).let {
             it.goToSouces()
             it.waitForMainPageSoucesAndCheckSelectTab()
@@ -34,7 +34,7 @@ class TestMainPage : BaseTest() {
     @Test
     @Description("Проверка отображения начинки")
     @Step("Переключаем на вкладку начинки")
-    fun testIngridient() {
+    fun testSelectIngridientTab() {
         MainPage(driver).let {
             it.goToIngridient()
             it.waitForMainPageIngridientAndCheckSelectTab()
