@@ -9,15 +9,15 @@ import kotlinx.coroutines.runBlocking
 
 abstract class BaseHttpClient {
 
-    private val fuelManager : FuelManager = FuelManager().apply {
+    private val fuelManager: FuelManager = FuelManager().apply {
         basePath = Const_URL.BASE_URL
     }
     private val gson = Gson()
 
 
-    fun doPostRequest(path: String, body : User) : User {
+    fun doPostRequest(path: String, body: User): User {
         return runBlocking {
-            val (request, response, result) = fuelManager.post(path)
+            val (_, _, result) = fuelManager.post(path)
                 .header("Content-Type", "application/json")
                 .body(gson.toJson(body))
                 .awaitStringResponseResult()
@@ -26,6 +26,7 @@ abstract class BaseHttpClient {
                 is Result.Failure -> {
                     throw Exception("Error: ${result.getException().message}")
                 }
+
                 is Result.Success -> {
                     val authResponse = gson.fromJson(result.get(), JsonObject::class.java).get("accessToken").asString
                     body.accessToken = authResponse
@@ -34,18 +35,22 @@ abstract class BaseHttpClient {
             }
         }
     }
-    suspend fun doDeleteRequest(path: String, accessToken: String): String {
-        val (request, response, result) = fuelManager.delete(path)
-            .header("Content-Type", "application/json")
-            .header("Authorization", accessToken)
-            .awaitStringResponseResult()
 
-        return when (result) {
-            is Result.Failure -> {
-                throw Exception("Error: ${result.getException().message}")
-            }
-            is Result.Success -> {
-                result.get()
+    fun doDeleteRequest(path: String, accessToken: String): String {
+        return runBlocking {
+            val (_, _, result) = fuelManager.delete(path)
+                .header("Content-Type", "application/json")
+                .header("Authorization", accessToken)
+                .awaitStringResponseResult()
+
+            when (result) {
+                is Result.Failure -> {
+                    throw Exception("Error: ${result.getException().message}")
+                }
+
+                is Result.Success -> {
+                    result.get()
+                }
             }
         }
     }
